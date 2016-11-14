@@ -2,6 +2,7 @@
 
 let express = require('express')
 let mongo = require('mongodb').MongoClient
+let bodyParser = require('body-parser')
 let routes = require('./app/routes/index.js')
 
 let app = express()
@@ -14,6 +15,9 @@ mongo.connect(connectionString, (err, db) => {
     } else {
         console.log('Connected to MongoDB on port 51137')
     }
+
+    app.use(bodyParser.json())
+    app.use(bodyParser.urlencoded({ extended: true }))
 
     app.use('/public', express.static(process.cwd() + '/public'))
     app.use('/controllers', express.static(process.cwd() + '/app/controllers'))
