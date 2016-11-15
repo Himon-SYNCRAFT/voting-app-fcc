@@ -5,6 +5,6 @@ html
         body
             h1 Polls
             .container
-                each poll in polls
-                    li
-                        a(href='/poll/' + poll._id)= poll.name
+                ul#polls
+
+            script(src='/controllers/polls.client.js')

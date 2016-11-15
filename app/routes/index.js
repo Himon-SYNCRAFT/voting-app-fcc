@@ -7,7 +7,7 @@ module.exports = (app, db) => {
 
     app.route('/')
         .get((req, res) => {
-            res.send('Hello')
+            res.render('index')
         })
 
     app.route('/api/polls')
