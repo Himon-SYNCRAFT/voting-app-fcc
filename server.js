@@ -6,7 +6,7 @@ let bodyParser = require('body-parser')
 let routes = require('./app/routes/index.js')
 
 let app = express()
-const port = process.env.PORT | 3000
+const port = process.env.PORT || 3000
 const connectionString = 'mongodb://tutorial:tutorial@ds151137.mlab.com:51137/clementine'
 
 mongo.connect(connectionString, (err, db) => {
