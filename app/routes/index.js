@@ -17,4 +17,7 @@ module.exports = (app, db) => {
     app.route('/api/poll/:id')
         .get(pollsHandler.getOne)
         .post(pollsHandler.addOption)
+
+    app.route('/api/poll/:id/vote/:option')
+        .get(pollsHandler.vote)
 }

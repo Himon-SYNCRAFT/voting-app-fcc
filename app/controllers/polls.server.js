@@ -89,22 +89,66 @@ function pollsHandler(db) {
             return
         }
 
-        let options = req.body.options.map((option) => {
-            let o = {}
+        let o = {}
+        req.body.options.forEach((option) => {
             o[option] = 0
-            return o
         })
 
         let poll = {
             name: req.body.name,
-            options
+            options: o
         }
 
         pollsCollection.insertOne(poll, (err, result) => {
             if (err) {
                 throw err
             }
-            res.json(result)
+            res.json(poll)
+        })
+    }
+
+    this.vote = (req, res) => {
+        let id
+        try {
+            id = ObjectID(req.params.id)
+        } catch(err) {
+            res.status(400)
+                .json({ error: err })
+            return
+        }
+
+        let option = req.params.option
+
+        if (!option) {
+            pollsCollection.findOne({ _id: id }, (err, doc) => {
+                if (err) {
+                    throw err
+                } else if (!doc) {
+                    res.status(404)
+                        .send('Not Found')
+                } else {
+                    res.json(doc)
+                }
+            })
+            return
+        }
+
+        pollsCollection.findOne({ _id: id }, (err, doc) => {
+            if (err) {
+                throw err
+            } else if (!doc) {
+                res.status(404)
+                    .send('Not Found')
+            } else {
+                if (option in doc.options) {
+                    doc.options[option]++
+                    pollsCollection.save(doc)
+                    res.json(doc)
+                } else {
+                    res.status(404)
+                        .send('Not Found')
+                }
+            }
         })
     }
 }
