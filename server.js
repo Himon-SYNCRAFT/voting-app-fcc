@@ -16,9 +16,6 @@ mongo.connect(connectionString, (err, db) => {
         console.log('Connected to MongoDB on port 51137')
     }
 
-    app.set('views', './app/views')
-    app.set('view engine', 'pug')
-
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
 
