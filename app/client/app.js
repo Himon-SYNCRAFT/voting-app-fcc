@@ -1,5 +1,6 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
+const PollsList = require('./components/Polls.jsx')
 
 
-ReactDOM.render(<h1>hello</h1>, document.getElementById('app-root'))
+ReactDOM.render(<div><PollsList /></div>, document.getElementById('app-root'))

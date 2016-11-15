@@ -27,3 +27,5 @@ const PollsActions = {
     update: () => {},
     vote: () => {},
 }
+
+module.exports = PollsActions

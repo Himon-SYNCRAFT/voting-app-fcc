@@ -1,6 +1,6 @@
 const axios = require('axios')
 const instance = axios.create({
-    baseUrl: 'http://localhost:3000/api/',
+    baseURL: 'http://localhost:3000/api/',
     timeout: 10000
 })
 
