@@ -10,6 +10,14 @@ const PollsStore = assign({}, EventEmitter.prototype, {
         return _polls
     },
 
+    one: (id) => {
+        for(let i in _polls) {
+            if (_polls[i]._id === id) {
+                return _polls[i]
+            }
+        }
+    },
+
     addChangeListener: function(callback) {
         this.on('change', callback)
     },

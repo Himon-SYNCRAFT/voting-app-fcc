@@ -1,4 +1,5 @@
 const React = require('react')
+const Link = require('react-router').Link
 const PollsStore = require('../stores/PollsStore')
 const PollsActions = require('../actions/PollsActions')
 
@@ -31,7 +32,28 @@ class PollsList extends React.Component {
     }
 
     render() {
-        return (<h1>Daniel</h1>)
+        let polls = this.state.polls.map(poll => {
+            return <PollsListItem key={poll._id} poll={poll} />
+        })
+
+        return (<ul id="polls-list">{polls}</ul>)
+    }
+}
+
+class PollsListItem extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.render = this.render.bind(this)
+    }
+
+    render() {
+        let poll = this.props.poll
+        let to = '/poll/' + this.props.poll._id
+
+        return (
+            <li className="polls-list-item"><Link to={to}>{ poll.name }</Link></li>
+        )
     }
 }
 
