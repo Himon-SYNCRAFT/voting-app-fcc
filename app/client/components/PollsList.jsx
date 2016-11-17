@@ -36,7 +36,12 @@ class PollsList extends React.Component {
             return <PollsListItem key={poll._id} poll={poll} />
         })
 
-        return (<ul id="polls-list">{polls}</ul>)
+        return (
+            <div>
+                <h2>Polls List</h2>
+                <ul className="list-unstyled" id="polls-list">{polls}</ul>
+            </div>
+        )
     }
 }
 
@@ -52,7 +57,7 @@ class PollsListItem extends React.Component {
         let to = '/poll/' + this.props.poll._id
 
         return (
-            <li className="polls-list-item"><Link to={to}>{ poll.name }</Link></li>
+            <li className="polls-list-item"><Link className="btn btn-default btn-lg" to={to}>{ poll.name }</Link></li>
         )
     }
 }

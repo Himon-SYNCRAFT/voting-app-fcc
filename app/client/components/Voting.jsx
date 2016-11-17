@@ -31,7 +31,12 @@ class VotingPanel extends React.Component {
             })
         }
 
-        return <PieChart data={data} />
+        return (
+            <div>
+                <h2>{poll.name}</h2>
+                <PieChart data={data} />
+            </div>
+        )
     }
 }
 
