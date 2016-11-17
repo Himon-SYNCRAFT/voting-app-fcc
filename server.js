@@ -3,6 +3,7 @@
 let express = require('express')
 let mongo = require('mongodb').MongoClient
 let bodyParser = require('body-parser')
+let session = require('express-session')
 let routes = require('./app/routes/index.js')
 
 let app = express()
@@ -16,11 +17,15 @@ mongo.connect(connectionString, (err, db) => {
         console.log('Connected to MongoDB on port 51137')
     }
 
+    app.use(session({
+        secret: '$2a$12$2Z.wdo.8ytoNn6b5faNAt.ywUFo5g2BmbS2FBJAUbg2iUWJc7li9q',
+        resave: false,
+        saveUninitialized: false
+    }))
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
 
     app.use('/public', express.static(process.cwd() + '/public'))
-    // app.use('/controllers', express.static(process.cwd() + '/app/controllers'))
 
     routes(app, db)
 

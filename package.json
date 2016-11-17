@@ -12,9 +12,11 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.2",
+    "bcrypt": "^0.8.7",
     "body-parser": "^1.15.2",
     "d3": "^4.3.0",
     "express": "^4.14.0",
+    "express-session": "^1.14.2",
     "flux": "^3.1.0",
     "mongodb": "^2.2.11",
     "object-assign": "^4.1.0",

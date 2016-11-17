@@ -1,9 +1,11 @@
 'use strict'
 
 let PollsHandler = require(process.cwd() + '/app/controllers/polls.server.js')
+let UsersHandler = require(process.cwd() + '/app/controllers/users.server.js')
 
 module.exports = (app, db) => {
     let pollsHandler = new PollsHandler(db)
+    let usersHandler = new UsersHandler(db)
 
     app.route('/api/polls')
         .get(pollsHandler.getAll)
@@ -15,6 +17,15 @@ module.exports = (app, db) => {
 
     app.route('/api/poll/:id/vote/:option')
         .get(pollsHandler.vote)
+
+    app.route('/api/auth/login')
+        .post(usersHandler.login)
+
+    app.route('/api/auth/logout')
+        .get(usersHandler.logout)
+
+    app.route('/api/auth/islogged')
+        .get(usersHandler.isLogged)
 
     app.route('*')
         .get((req, res) => {
