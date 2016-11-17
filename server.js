@@ -20,7 +20,7 @@ mongo.connect(connectionString, (err, db) => {
     app.use(bodyParser.urlencoded({ extended: true }))
 
     app.use('/public', express.static(process.cwd() + '/public'))
-    app.use('/controllers', express.static(process.cwd() + '/app/controllers'))
+    // app.use('/controllers', express.static(process.cwd() + '/app/controllers'))
 
     routes(app, db)
 

@@ -5,11 +5,6 @@ let PollsHandler = require(process.cwd() + '/app/controllers/polls.server.js')
 module.exports = (app, db) => {
     let pollsHandler = new PollsHandler(db)
 
-    app.route('/')
-        .get((req, res) => {
-            res.sendFile(process.cwd() + '/public/index.html')
-        })
-
     app.route('/api/polls')
         .get(pollsHandler.getAll)
         .post(pollsHandler.addPoll)
@@ -20,4 +15,9 @@ module.exports = (app, db) => {
 
     app.route('/api/poll/:id/vote/:option')
         .get(pollsHandler.vote)
+
+    app.route('*')
+        .get((req, res) => {
+            res.sendFile(process.cwd() + '/public/index.html')
+        })
 }

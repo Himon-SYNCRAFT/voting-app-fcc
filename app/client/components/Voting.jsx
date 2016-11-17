@@ -14,10 +14,20 @@ class VotingPanel extends React.Component {
                 options: {}
             }
         }
+
+        this._onChange = this._onChange.bind(this)
+    }
+
+    _onChange() {
+        this.setState({ poll: PollsStore.one(this.props.params.id) })
     }
 
     componentDidMount() {
-        this.setState({ poll: PollsStore.one(this.props.params.id) })
+        PollsStore.addChangeListener(this._onChange)
+    }
+
+    componentWillUnmount() {
+        PollsStore.removeChangeListener(this._onChange)
     }
 
     render() {
@@ -35,7 +45,7 @@ class VotingPanel extends React.Component {
             <div>
                 <h2>{poll.name}</h2>
                 <PieChart data={data} />
-            </div>
+                </div>
         )
     }
 }
