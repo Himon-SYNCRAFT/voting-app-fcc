@@ -26,7 +26,8 @@ class Main extends React.Component {
                         <ul className="nav navbar-nav">
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
-                            <li><a href="/">Link</a></li>
+                            <li><Link to="/auth/login">Log in</Link></li>
+                            <li><Link to="/auth/register">Register</Link></li>
                         </ul>
                     </div>
                 </div>

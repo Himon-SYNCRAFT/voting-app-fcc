@@ -26,6 +26,26 @@ const Api = {
         vote: (id, option) => {
             return instance.get('/poll/' + id + '/vote/' + option)
         }
+    },
+
+    users: {
+        create: (data) => {
+            return instance.post('/users', data)
+        }
+    },
+
+    auth: {
+        login: (data) => {
+            return instance.post('/auth/login')
+        },
+
+        logout: () => {
+            return instance.get('/auth/logout')
+        },
+
+        isLogged: () => {
+            return instance.get('/auth/islogged')
+        }
     }
 }
 

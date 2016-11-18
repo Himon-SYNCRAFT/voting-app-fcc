@@ -2,7 +2,9 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const Main = require('./components/layout/Main.jsx')
 const PollsList = require('./components/PollsList.jsx')
-const Voting = require('./components/Voting.jsx')
+const VotingPanel = require('./components/VotingPanel.jsx')
+const LoginPanel = require('./components/LoginPanel.jsx')
+const RegistrationPanel = require('./components/RegistrationPanel.jsx')
 const Router = require('react-router').Router
 const Route = require('react-router').Route
 const IndexRoute = require('react-router').IndexRoute
@@ -12,8 +14,9 @@ ReactDOM.render((
     <Router history={browserHistory}>
         <Route path="/" component={Main}>
             <IndexRoute component={PollsList}/>
-            <Route path="/poll/:id" component={Voting}>
-            </Route>
+            <Route path="/poll/:id" component={VotingPanel}/>
+            <Route path="/auth/login" component={LoginPanel}/>
+            <Route path="/auth/register" component={RegistrationPanel}/>
         </Route>
     </Router>
 ), document.getElementById('app-root'))

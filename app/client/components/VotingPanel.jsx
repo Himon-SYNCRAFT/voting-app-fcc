@@ -45,7 +45,7 @@ class VotingPanel extends React.Component {
             <div>
                 <h2>{poll.name}</h2>
                 <PieChart data={data} />
-                </div>
+            </div>
         )
     }
 }
@@ -57,12 +57,11 @@ class PieChart extends React.Component {
 
     render() {
         let data = this.props.data
+        let noEmptyData = data.filter(item => item.value != 0)
         let width = this.props.width || 960
         let height = this.props.height || 500
         let radius =  Math.min(width, height) / 2
         let color = d3.scaleOrdinal(d3.schemeCategory20)
-
-        console.log(data);
 
         let arc = d3.arc()
             .outerRadius(radius - 40)
@@ -83,7 +82,7 @@ class PieChart extends React.Component {
             .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
         let g = svg.selectAll('.arc')
-            .data(pie(data))
+            .data(pie(noEmptyData))
             .enter().append('g')
             .attr('class', 'arc')
 
