@@ -18,6 +18,7 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "flux": "^3.1.0",
+    "keymirror": "^0.1.1",
     "mongodb": "^2.2.11",
     "object-assign": "^4.1.0",
     "pug": "^2.0.0-beta6",
