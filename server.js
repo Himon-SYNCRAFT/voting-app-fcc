@@ -1,10 +1,11 @@
 'use strict'
 
-let express = require('express')
-let mongo = require('mongodb').MongoClient
-let bodyParser = require('body-parser')
-let session = require('express-session')
-let routes = require('./app/routes/index.js')
+const express = require('express')
+const mongo = require('mongodb').MongoClient
+const bodyParser = require('body-parser')
+const session = require('express-session')
+const routes = require('./app/routes/index.js')
+const compression = require('compression')
 
 let app = express()
 const port = process.env.PORT || 3000
@@ -17,6 +18,7 @@ mongo.connect(connectionString, (err, db) => {
         console.log('Connected to MongoDB on port 51137')
     }
 
+    app.use(compression())
     app.use(session({
         secret: '$2a$12$2Z.wdo.8ytoNn6b5faNAt.ywUFo5g2BmbS2FBJAUbg2iUWJc7li9q',
         resave: false,
