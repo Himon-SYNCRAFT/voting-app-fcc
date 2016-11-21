@@ -14,6 +14,7 @@ module.exports = (app, db) => {
     app.route('/api/poll/:id')
         .get(pollsHandler.getOne)
         .post(isLogged, pollsHandler.addOption)
+        .delete(isLogged, pollsHandler.deletePoll)
 
     app.route('/api/poll/:id/vote/:option')
         .get(pollsHandler.vote)
@@ -27,11 +28,8 @@ module.exports = (app, db) => {
     app.route('/api/auth/logout')
         .get(usersHandler.logout)
 
-    app.route('/api/user/polls')
-        .get(isLogged, pollsHandler.getUsersPolls)
-
-    app.route('/api/user/poll/:pollId')
-        .delete(isLogged, pollsHandler.deletePoll)
+    app.route('/api/polls/user/:userId')
+        .get(pollsHandler.getUserPolls)
 
     app.route('/api/auth/islogged')
         .get(usersHandler.isLogged)

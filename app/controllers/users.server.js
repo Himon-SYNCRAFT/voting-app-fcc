@@ -39,7 +39,8 @@ function usersHandler (db) {
                     if (res) {
                         req.session.isLogged = true
                         req.session.userId = doc._id
-                        res.json({ status: 'success' })
+                        let user = {username: doc.name, id: doc._id}
+                        res.json({ status: 'success', user })
                     } else {
                         res.json({ status: 'failed' })
                     }

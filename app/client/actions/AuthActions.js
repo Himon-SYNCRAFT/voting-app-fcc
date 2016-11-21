@@ -8,10 +8,8 @@ const AuthActions = {
             .then(response => {
                 let r
                 if (response.data.status === 'success') {
-                    r = {
-                        isLogged: true,
-                        username: data.username
-                    }
+                    r = response.data.user
+                    r.isLogged = true
                 }
                 AppDispatcher.dispatch({
                     actionType: AuthConstants.LOGIN_USER,

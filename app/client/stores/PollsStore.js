@@ -33,6 +33,10 @@ AppDispatcher.register((action) => {
             _polls = action.data
             break;
 
+        case PollsConstants.GET_BY_USER:
+            _polls = action.data
+            break;
+
         case PollsConstants.CREATE:
             _polls.push(action.data)
             break;

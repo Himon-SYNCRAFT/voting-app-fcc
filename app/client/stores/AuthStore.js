@@ -5,18 +5,11 @@ const assign = require('object-assign')
 
 let _auth = {
     isLogged: false,
-    username: ''
+    username: '',
+    userId: null
 }
 
 const AuthStore = assign({}, EventEmitter.prototype, {
-    isLogged: () => {
-        return _auth.isLogged
-    },
-
-    getUsername: () => {
-        return _auth.username
-    },
-
     get: () => {
         return _auth
     },
@@ -33,14 +26,15 @@ const AuthStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(action => {
     switch (action.actionType) {
         case AuthConstants.LOGIN_USER:
-            console.log(action.data);
             _auth.isLogged = action.data.isLogged
             _auth.username = action.data.username
+            _auth.userId = action.data.id
             break
 
         case AuthConstants.LOGOUT_USER:
             _auth.isLogged = false
             _auth.username = ''
+            _auth.userId = null
             break
 
         case AuthConstants.IS_LOGGED_USER:

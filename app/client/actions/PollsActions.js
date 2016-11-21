@@ -23,6 +23,16 @@ const PollsActions = {
             })
     },
 
+    getByUser: (userId) => {
+        Api.polls.getByUser(userId)
+            .then(response => {
+                AppDispatcher.dispatch({
+                    actionType: PollsConstants.GET_BY_USER,
+                    data: response.data
+                })
+            })
+    },
+
     create: () => {},
     update: () => {},
     vote: () => {},

@@ -37,17 +37,14 @@ function pollsHandler(db) {
         })
     }
 
-    this.getUsersPolls = (req, res) => {
-        const userId = req.session.userId
+    this.getUserPolls = (req, res) => {
+        let userId = req.params.userId
 
-        pollsCollection.find({ userId: userId }, (err, doc) => {
+        pollsCollection.find({ userId: userId }).toArray((err, docs) => {
             if (err) {
                 throw err
-            } else if (!doc) {
-                res.status(404)
-                    .send('Not Found')
             } else {
-                res.json(doc)
+                res.json(docs)
             }
         })
     }
