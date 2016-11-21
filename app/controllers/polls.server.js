@@ -37,6 +37,44 @@ function pollsHandler(db) {
         })
     }
 
+    this.getUsersPolls = (req, res) => {
+        const userId = req.session.userId
+
+        pollsCollection.find({ userId: userId }, (err, doc) => {
+            if (err) {
+                throw err
+            } else if (!doc) {
+                res.status(404)
+                    .send('Not Found')
+            } else {
+                res.json(doc)
+            }
+        })
+    }
+
+    this.deletePoll = (req, res) => {
+        let userId = req.session.userId
+        let pollId = req.params.id
+        try {
+            pollId = ObjectID(req.params.id)
+        } catch(err) {
+            res.status(400)
+                .json({ error: err })
+            return
+        }
+
+        pollsCollection.findOneAndDelete({_id: pollId, userId: userId}, (err, doc) => {
+            if (err) {
+                throw err
+            } else if (!doc) {
+                res.status(404)
+                    .send('Not Found')
+            } else {
+                res.json(doc)
+            }
+        })
+    }
+
     this.addOption = (req, res) => {
         let id
         try {
@@ -83,6 +121,7 @@ function pollsHandler(db) {
     }
 
     this.addPoll = (req, res) => {
+        let userId = req.session.userId
         if (!req.body.name || !req.body.options || req.body.options.length < 2) {
             res.status(400)
                 .json({ error: "Invalid request data" })
@@ -96,6 +135,7 @@ function pollsHandler(db) {
 
         let poll = {
             name: req.body.name,
+            userId: userId,
             options: o
         }
 

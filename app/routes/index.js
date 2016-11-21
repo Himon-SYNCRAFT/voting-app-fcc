@@ -9,11 +9,11 @@ module.exports = (app, db) => {
 
     app.route('/api/polls')
         .get(pollsHandler.getAll)
-        .post(pollsHandler.addPoll)
+        .post(isLogged, pollsHandler.addPoll)
 
     app.route('/api/poll/:id')
         .get(pollsHandler.getOne)
-        .post(pollsHandler.addOption)
+        .post(isLogged, pollsHandler.addOption)
 
     app.route('/api/poll/:id/vote/:option')
         .get(pollsHandler.vote)
@@ -27,6 +27,12 @@ module.exports = (app, db) => {
     app.route('/api/auth/logout')
         .get(usersHandler.logout)
 
+    app.route('/api/user/polls')
+        .get(isLogged, pollsHandler.getUsersPolls)
+
+    app.route('/api/user/poll/:pollId')
+        .delete(isLogged, pollsHandler.deletePoll)
+
     app.route('/api/auth/islogged')
         .get(usersHandler.isLogged)
 
@@ -34,4 +40,13 @@ module.exports = (app, db) => {
         .get((req, res) => {
             res.sendFile(process.cwd() + '/public/index.html')
         })
+}
+
+function isLogged(req, res, next) {
+    if (req.session.isLogged) {
+        return next()
+    }
+
+    res.status(403)
+    res.end()
 }
