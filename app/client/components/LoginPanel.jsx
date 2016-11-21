@@ -33,7 +33,8 @@ class LoginPanel extends React.Component {
 
     _onSubmit(event) {
         event.preventDefault()
-        AuthActions.login(event.target.value)
+        let user = this.state.user
+        AuthActions.login(user)
         browserHistory.push('/')
     }
 

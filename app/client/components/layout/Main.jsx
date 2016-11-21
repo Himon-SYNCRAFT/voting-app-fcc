@@ -1,13 +1,50 @@
 const React = require('react')
 const Link = require('react-router').Link
+const browserHistory = require('react-router').browserHistory
+const AuthStore = require('../../stores/AuthStore')
+const AuthActions = require('../../actions/AuthActions')
 
 
 class Main extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            auth: AuthStore.get()
+        }
+
+        this._onChange = this._onChange.bind(this)
+        this._onClickLogOut = this._onClickLogOut.bind(this)
+    }
+
+    componentDidMount() {
+        AuthStore.addChangeListener(this._onChange)
+    }
+
+    componentWillUnmount() {
+        AuthStore.removeChangeListener(this._onChange)
+    }
+
+    _onChange() {
+        this.setState({auth: AuthStore.get()})
+    }
+
+    _onClickLogOut(event) {
+        event.preventDefault()
+        AuthActions.logout()
+        browserHistory.push('/')
     }
 
     render() {
+        let userIsLogged = this.state.auth.isLogged
+        let rightMenu = []
+
+        if (userIsLogged) {
+            rightMenu.push(<li><a href="#" onClick={this._onClickLogOut}>Log out</a></li>)
+        } else {
+            rightMenu.push(<li><Link to="/auth/login">Log in</Link></li>)
+            rightMenu.push(<li><Link to="/auth/register">Register</Link></li>)
+        }
+
         return (
         <div className="container">
             <nav className="navbar navbar-default">
@@ -25,9 +62,8 @@ class Main extends React.Component {
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
                         </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            <li><Link to="/auth/login">Log in</Link></li>
-                            <li><Link to="/auth/register">Register</Link></li>
+                    <ul className="nav navbar-nav navbar-right">
+                        {rightMenu}
                         </ul>
                     </div>
                 </div>

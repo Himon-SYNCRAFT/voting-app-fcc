@@ -35,7 +35,7 @@ function usersHandler (db) {
                 res.json({ status: 'failed' })
             } else {
                 let hash = doc.password
-                bcrypt.compare(req.body.password, hash, (err, res)  => {
+                bcrypt.compare(req.body.password, hash, (err, r)  => {
                     if (res) {
                         req.session.isLogged = true
                         res.json({ status: 'success' })

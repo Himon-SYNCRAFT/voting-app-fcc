@@ -6,9 +6,16 @@ const AuthActions = {
     login: (data) => {
         Api.auth.login(data)
             .then(response => {
+                let r
+                if (response.data.status === 'success') {
+                    r = {
+                        isLogged: true,
+                        username: data.username
+                    }
+                }
                 AppDispatcher.dispatch({
                     actionType: AuthConstants.LOGIN_USER,
-                    data: response.data
+                    data: r
                 })
             })
     },

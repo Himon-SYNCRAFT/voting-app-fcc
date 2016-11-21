@@ -17,6 +17,10 @@ const AuthStore = assign({}, EventEmitter.prototype, {
         return _auth.username
     },
 
+    get: () => {
+        return _auth
+    },
+
     addChangeListener: function(callback) {
         this.on('change', callback)
     },
@@ -29,6 +33,7 @@ const AuthStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(action => {
     switch (action.actionType) {
         case AuthConstants.LOGIN_USER:
+            console.log(action.data);
             _auth.isLogged = action.data.isLogged
             _auth.username = action.data.username
             break

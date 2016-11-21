@@ -36,7 +36,7 @@ const Api = {
 
     auth: {
         login: (data) => {
-            return instance.post('/auth/login')
+            return instance.post('/auth/login', data)
         },
 
         logout: () => {
