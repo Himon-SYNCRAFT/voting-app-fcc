@@ -6,6 +6,7 @@ const UserPollsList = require('./components/UserPollsList.jsx')
 const VotingPanel = require('./components/VotingPanel.jsx')
 const LoginPanel = require('./components/LoginPanel.jsx')
 const RegistrationPanel = require('./components/RegistrationPanel.jsx')
+const PollForm = require('./components/PollForm.jsx')
 const Router = require('react-router').Router
 const Route = require('react-router').Route
 const IndexRoute = require('react-router').IndexRoute
@@ -16,6 +17,7 @@ ReactDOM.render((
         <Route path="/" component={Main}>
             <IndexRoute component={PollsList}/>
             <Route path="/user/polls" component={UserPollsList}/>
+            <Route path="/user/poll/add" component={PollForm}/>
             <Route path="/poll/:id" component={VotingPanel}/>
             <Route path="/auth/login" component={LoginPanel}/>
             <Route path="/auth/register" component={RegistrationPanel}/>

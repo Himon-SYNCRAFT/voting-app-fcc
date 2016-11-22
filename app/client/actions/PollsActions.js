@@ -43,7 +43,16 @@ const PollsActions = {
             })
     },
 
-    create: () => {},
+    create: (data) => {
+        Api.polls.create(data)
+            .then(response => {
+                AppDispatcher.dispatch({
+                    actionType: PollsConstants.CREATE_POLL,
+                    data: response.data
+                })
+            })
+    },
+
     update: () => {},
     vote: () => {},
 }

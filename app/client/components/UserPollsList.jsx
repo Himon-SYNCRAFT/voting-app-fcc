@@ -56,6 +56,7 @@ class UserPollsList extends React.Component {
                         <tr>
                             <th>#</th>
                             <th>Name</th>
+                            <th>Show</th>
                             <th>Delete</th>
                         </tr>
                     </thead>
@@ -81,6 +82,9 @@ class PollsListItem extends React.Component {
             <tr>
                 <td>{ this.props.index + 1 }</td>
                 <td>{ poll.name }</td>
+                <td>
+                    <Link to={to} className="btn btn-info">Show</Link>
+                </td>
                 <td>
                     <button className="btn btn-danger" onClick={this.props.onClickDelete}>Delete</button>
                 </td>

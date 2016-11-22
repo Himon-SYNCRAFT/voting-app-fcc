@@ -41,6 +41,7 @@ class Main extends React.Component {
         if (userIsLogged) {
             rightMenu.push(<li key="logout"><a href="#" onClick={this._onClickLogOut}>Log out</a></li>)
             rightMenu.push(<li key="my-polls"><Link to="/user/polls">My polls</Link></li>)
+            rightMenu.push(<li key="new-poll"><Link to="/user/poll/add">New poll</Link></li>)
         } else {
             rightMenu.push(<li key="login"><Link to="/auth/login">Log in</Link></li>)
             rightMenu.push(<li key="register"><Link to="/auth/register">Register</Link></li>)
