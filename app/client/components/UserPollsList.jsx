@@ -39,15 +39,30 @@ class UserPollsList extends React.Component {
         AuthStore.removeChangeListener(this._onChange)
     }
 
+    _onClickDelete(id) {
+        PollsActions.delete(id)
+    }
+
     render() {
-        let polls = this.state.polls.map(poll => {
-            return <PollsListItem key={poll._id} poll={poll} />
+        let polls = this.state.polls.map((poll, i) => {
+            return <PollsListItem key={poll._id} index={i} poll={poll} onClickDelete={this._onClickDelete.bind(this, poll._id)} />
         })
 
         return (
             <div>
                 <h2>Polls List</h2>
-                <ul className="list-unstyled" id="polls-list">{polls}</ul>
+                <table className="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {polls}
+                    </tbody>
+                </table>
             </div>
         )
     }
@@ -56,8 +71,6 @@ class UserPollsList extends React.Component {
 class PollsListItem extends React.Component {
     constructor(props) {
         super(props)
-
-        this.render = this.render.bind(this)
     }
 
     render() {
@@ -65,7 +78,13 @@ class PollsListItem extends React.Component {
         let to = '/poll/' + this.props.poll._id
 
         return (
-            <li className="polls-list-item"><Link className="btn btn-default btn-lg" to={to}>{ poll.name }</Link></li>
+            <tr>
+                <td>{ this.props.index + 1 }</td>
+                <td>{ poll.name }</td>
+                <td>
+                    <button className="btn btn-danger" onClick={this.props.onClickDelete}>Delete</button>
+                </td>
+            </tr>
         )
     }
 }

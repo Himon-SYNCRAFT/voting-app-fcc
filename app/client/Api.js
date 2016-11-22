@@ -15,6 +15,10 @@ const Api = {
             return instance.get('/poll/' + id)
         },
 
+        delete: (id) => {
+            return instance.delete('/poll/' + id)
+        },
+
         getByUser: (userId) => {
             return instance.get('/polls/user/' + userId)
         },

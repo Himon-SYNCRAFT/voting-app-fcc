@@ -7,7 +7,7 @@ const PollsActions = {
         Api.polls.all()
             .then((response) => {
                 AppDispatcher.dispatch({
-                    actionType: PollsConstants.GET_ALL,
+                    actionType: PollsConstants.GET_ALL_POLLS,
                     data: response.data
                 })
             })
@@ -17,7 +17,7 @@ const PollsActions = {
         Api.polls.one(id)
             .then((response) => {
                 AppDispatcher.dispatch({
-                    actionType: PollsConstants.GET,
+                    actionType: PollsConstants.GET_POLL,
                     data: response.data
                 })
             })
@@ -27,8 +27,18 @@ const PollsActions = {
         Api.polls.getByUser(userId)
             .then(response => {
                 AppDispatcher.dispatch({
-                    actionType: PollsConstants.GET_BY_USER,
+                    actionType: PollsConstants.GET_POLLS_BY_USER,
                     data: response.data
+                })
+            })
+    },
+
+    delete: (id) => {
+        Api.polls.delete(id)
+            .then(response => {
+                AppDispatcher.dispatch({
+                    actionType: PollsConstants.DELETE_POLL,
+                    data: response.data.value
                 })
             })
     },

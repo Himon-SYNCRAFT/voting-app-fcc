@@ -1,7 +1,10 @@
-const AUTH_CONSTANTS = {
-    LOGIN_USER: 'LOGIN_USER',
-    LOGOUT_USER: 'LOGOUT_USER',
-    IS_LOGGED_USER: 'IS_LOGGED_USER'
-}
+const keymirror = require('keymirror')
+
+
+const AUTH_CONSTANTS = keymirror({
+    LOGIN_USER: null,
+    LOGOUT_USER: null,
+    IS_LOGGED_USER: null
+})
 
 module.exports = AUTH_CONSTANTS

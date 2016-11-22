@@ -1,11 +1,11 @@
 const keymirror = require('keymirror')
 
-const USERS_CONSTANTS = {
+const USERS_CONSTANTS = keymirror({
     GET_USER: null,
     GET_ALL_USERS: null,
     CREATE_USER: null,
     DELETE_USER: null,
     UPDATE_USER: null,
-}
+})
 
 module.exports = USERS_CONSTANTS
