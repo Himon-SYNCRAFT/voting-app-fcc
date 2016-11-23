@@ -7,23 +7,32 @@ function usersHandler (db) {
     let usersCollection = db.collection('users')
 
     this.createUser = (req, res) => {
-        bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+        usersCollection.findOne({ name: req.body.username }, (err, doc) => {
             if (err) {
                 throw err
+            } else if (doc) {
+                res.status(409)
+                    .send('Option already exist')
+            } else {
+                bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
+                    if (err) {
+                        throw err
+                    }
+
+                    let user = {
+                        name: req.body.username,
+                        password: hash
+                    }
+
+                    usersCollection.insertOne(user, (err, result) => {
+                        if (err) {
+                            throw err
+                        }
+
+                        res.json({_id: user._id, name: user.name})
+                    })
+                })
             }
-
-            let user = {
-                name: req.body.username,
-                password: hash
-            }
-
-            usersCollection.insertOne(user, (err, result) => {
-                if (err) {
-                    throw err
-                }
-
-                res.json({_id: user._id, name: user.name})
-            })
         })
     }
 
