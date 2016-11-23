@@ -21,7 +21,7 @@ mongo.connect(connectionString, (err, db) => {
     app.use(compression())
     app.use(session({
         secret: '$2a$12$2Z.wdo.8ytoNn6b5faNAt.ywUFo5g2BmbS2FBJAUbg2iUWJc7li9q',
-        resave: false,
+        resave: true,
         saveUninitialized: false
     }))
     app.use(bodyParser.json())
