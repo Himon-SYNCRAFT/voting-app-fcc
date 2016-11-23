@@ -53,8 +53,15 @@ const PollsActions = {
             })
     },
 
-    update: () => {},
-    vote: () => {},
+    vote: (id, data) => {
+        Api.polls.vote(id, data)
+            .then(response => {
+                AppDispatcher.dispatch({
+                    actionType: PollsConstants.VOTE,
+                    data: response.data
+                })
+            })
+    },
 }
 
 module.exports = PollsActions

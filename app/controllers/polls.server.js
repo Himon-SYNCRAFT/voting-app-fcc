@@ -178,6 +178,7 @@ function pollsHandler(db) {
                     .send('Not Found')
             } else {
                 if (option in doc.options) {
+                    console.log(option)
                     doc.options[option]++
                     pollsCollection.save(doc)
                     res.json(doc)

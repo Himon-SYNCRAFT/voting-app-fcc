@@ -12,14 +12,27 @@ class VotingPanel extends React.Component {
             poll: {
                 name: '',
                 options: {}
-            }
+            },
+
+            vote: ''
         }
 
         this._onChange = this._onChange.bind(this)
+        this._handleOption = this._handleOption.bind(this)
+        this._onSubmit = this._onSubmit.bind(this)
     }
 
     _onChange() {
         this.setState({ poll: PollsStore.one(this.props.params.id) })
+    }
+
+    _handleOption(event) {
+        this.setState({ vote: event.target.value })
+    }
+
+    _onSubmit(event) {
+        event.preventDefault()
+        PollsActions.vote(this.props.params.id, this.state.vote)
     }
 
     componentDidMount() {
@@ -33,19 +46,37 @@ class VotingPanel extends React.Component {
     render() {
         let poll = this.state.poll
         let data = []
+        let options = [(<option key={""} value=''>-- Choose --</option>)]
+        let isButtonDisabled = this.state.vote == ''
 
         for (let key in poll.options) {
             data.push({
                 label: key,
                 value: poll.options[key]
             })
+
+            options.push(<option key={key} value={key}>{key}</option>)
         }
 
         return (
             <div>
                 <h2>{poll.name}</h2>
-                <PieChart data={data} />
-            </div>
+                <div className="col-sm-3">
+                    <form onSubmit={this._onSubmit}>
+                        <div className="form-group">
+                            <select value={this.state.vote} onChange={this._handleOption} className="form-control">
+                                {options}
+                            </select>
+                </div>
+                <div className="form-group">
+                    <button className="btn btn-success" disabled={isButtonDisabled ? 'disabled' : ''}>Vote</button>
+                </div>
+                </form>
+                </div>
+                <div className="col-sm-9" style={{textAlign: 'center'}}>
+                    <PieChart data={data} />
+                </div>
+                </div>
         )
     }
 }
@@ -58,7 +89,7 @@ class PieChart extends React.Component {
     render() {
         let data = this.props.data
         let noEmptyData = data.filter(item => item.value != 0)
-        let width = this.props.width || 960
+        let width = this.props.width || 500
         let height = this.props.height || 500
         let radius =  Math.min(width, height) / 2
         let color = d3.scaleOrdinal(d3.schemeCategory20)
@@ -75,7 +106,11 @@ class PieChart extends React.Component {
             .sort(null)
             .value(d => d.value)
 
-        let svg = d3.select('#d3').append('svg')
+        let root = d3.select('#d3')
+
+        root.select('svg').remove()
+
+        let svg = root.append('svg')
             .attr('width', width)
             .attr('height', height)
             .append('g')

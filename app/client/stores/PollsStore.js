@@ -38,6 +38,15 @@ AppDispatcher.register((action) => {
             PollsStore.emit(CHANGE)
             break;
 
+        case PollsConstants.VOTE:
+            for (let i = 0, len = _polls.length; i < len; i++) {
+                if (_polls[i]._id == action.data._id) {
+                    _polls[i] = action.data
+                }
+            }
+            PollsStore.emit(CHANGE)
+            break;
+
         case PollsConstants.GET_POLLS_BY_USER:
             _polls = action.data
             PollsStore.emit(CHANGE)
