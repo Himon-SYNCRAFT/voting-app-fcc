@@ -3,47 +3,53 @@ const EventEmitter = require('events').EventEmitter
 const AuthConstants = require('../constants/AuthConstants')
 const assign = require('object-assign')
 
-let _auth = {
-    isLogged: false,
-    username: '',
-    userId: null
+const CHANGE = 'CHANGE AUTH'
+
+function setUser(user, id) {
+    localStorage.setItem('username', user)
+    localStorage.setItem('userId', id)
+}
+
+function removeUser() {
+    localStorage.removeItem('username')
+    localStorage.removeItem('userId')
 }
 
 const AuthStore = assign({}, EventEmitter.prototype, {
     get: () => {
-        return _auth
+        let username = localStorage.getItem('username')
+        let userId = localStorage.getItem('userId')
+        return { username, userId }
+    },
+
+    isLogged: () => {
+        let username = localStorage.getItem('username')
+        let userId = localStorage.getItem('userId')
+        return username && userId
     },
 
     addChangeListener: function(callback) {
-        this.on('change', callback)
+        this.on(CHANGE, callback)
     },
 
     removeChangeListener: function(callback) {
-        this.removeListener('change', callback)
+        this.removeListener(CHANGE, callback)
     }
 })
 
 AppDispatcher.register(action => {
+
     switch (action.actionType) {
         case AuthConstants.LOGIN_USER:
-            _auth.isLogged = action.data.isLogged
-            _auth.username = action.data.username
-            _auth.userId = action.data.id
+            setUser(action.data.username, action.data.id)
+            AuthStore.emit(CHANGE)
             break
 
         case AuthConstants.LOGOUT_USER:
-            _auth.isLogged = false
-            _auth.username = ''
-            _auth.userId = null
-            break
-
-        case AuthConstants.IS_LOGGED_USER:
-            _auth.isLogged = action.data.isLogged
-            _auth.username = action.data.username
+            removeUser()
+            AuthStore.emit(CHANGE)
             break
     }
-
-    AuthStore.emit('change')
 })
 
 module.exports = AuthStore

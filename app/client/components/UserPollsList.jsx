@@ -19,24 +19,28 @@ class UserPollsList extends React.Component {
         PollsActions.getByUser(userId)
 
         this._onChange = this._onChange.bind(this)
-        this.componentDidMount = this.componentDidMount.bind(this)
-        this.componentWillUnmount = this.componentWillUnmount.bind(this)
-        this.render = this.render.bind(this)
+        this._onChangeAuth = this._onChangeAuth.bind(this)
     }
 
     _onChange() {
+        this.setState({
+            polls: PollsStore.all(),
+        })
+    }
+
+    _onChangeAuth() {
         let userId = this.state.auth.userId
-        this.setState({polls: PollsStore.all()})
+        PollsActions.getByUser(userId)
     }
 
     componentDidMount() {
         PollsStore.addChangeListener(this._onChange)
-        AuthStore.addChangeListener(this._onChange)
+        AuthStore.addChangeListener(this._onChangeAuth)
     }
 
     componentWillUnmount() {
         PollsStore.removeChangeListener(this._onChange)
-        AuthStore.removeChangeListener(this._onChange)
+        AuthStore.removeChangeListener(this._onChangeAuth)
     }
 
     _onClickDelete(id) {

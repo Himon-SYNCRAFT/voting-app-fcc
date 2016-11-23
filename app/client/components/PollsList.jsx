@@ -14,9 +14,6 @@ class PollsList extends React.Component {
         PollsActions.all()
 
         this._onChange = this._onChange.bind(this)
-        this.componentDidMount = this.componentDidMount.bind(this)
-        this.componentWillUnmount = this.componentWillUnmount.bind(this)
-        this.render = this.render.bind(this)
     }
 
     _onChange() {

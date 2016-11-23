@@ -35,7 +35,7 @@ class Main extends React.Component {
     }
 
     render() {
-        let userIsLogged = this.state.auth.isLogged
+        let userIsLogged = AuthStore.isLogged()
         let rightMenu = []
 
         if (userIsLogged) {

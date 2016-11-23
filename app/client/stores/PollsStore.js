@@ -3,6 +3,8 @@ const EventEmitter = require('events').EventEmitter
 const PollsConstants = require('../constants/PollsConstants')
 const assign = require('object-assign')
 
+const CHANGE = 'CHANGE POLLS'
+
 let _polls = []
 
 const PollsStore = assign({}, EventEmitter.prototype, {
@@ -19,11 +21,11 @@ const PollsStore = assign({}, EventEmitter.prototype, {
     },
 
     addChangeListener: function(callback) {
-        this.on('change', callback)
+        this.on(CHANGE, callback)
     },
 
     removeChangeListener: function(callback) {
-        this.removeListener('change', callback)
+        this.removeListener(CHANGE, callback)
     }
 })
 
@@ -33,19 +35,23 @@ AppDispatcher.register((action) => {
     switch (action.actionType) {
         case PollsConstants.GET_ALL_POLLS:
             _polls = action.data
+            PollsStore.emit(CHANGE)
             break;
 
-        case PollsConstants.GET_POLL_BY_USER:
+        case PollsConstants.GET_POLLS_BY_USER:
             _polls = action.data
+            PollsStore.emit(CHANGE)
             break;
 
         case PollsConstants.CREATE_POLL:
             _polls.push(action.data)
+            PollsStore.emit(CHANGE)
             break;
 
         case PollsConstants.DELETE_POLL:
             let id = action.data._id
             _polls = _polls.filter(poll => poll._id != id)
+            PollsStore.emit(CHANGE)
             break;
 
         case PollsConstants.UPDATE_POLL:
@@ -54,10 +60,10 @@ AppDispatcher.register((action) => {
                     _polls[i] = action.data
                 }
             }
+            PollsStore.emit(CHANGE)
             break;
     }
 
-    PollsStore.emit('change')
 })
 
 module.exports = PollsStore
