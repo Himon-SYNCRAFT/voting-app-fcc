@@ -95,8 +95,10 @@ class VotingPanel extends React.Component {
                     onRequestClose={this._closeModal}
                     contentLabel="Add new option"
                     style={{
-                        border: 'none',
-                        background: 'none'
+                        content: {
+                            border: 'none',
+                            background: 'none'
+                        }
                     }}
                 >
                     <div className="modal-dialog" role="document">
@@ -171,36 +173,6 @@ class PieChart extends React.Component {
             .style('text-anchor', 'middle')
 
         return <div id="d3"></div>
-    }
-}
-
-class AddOptionModal extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return (
-            <div id="add-option-modal" className="modal fade" tabIndex="-1" role="dialog">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button className="close" data-dismiss="modal">
-                                <span>&times;</span>
-                            </button>
-                            <h4 className="modal-title">Add new option</h4>
-                        </div>
-                        <div className="modal-body">
-                            bla bal bal
-                        </div>
-                        <div className="modal-footer">
-                            <button className="btn btn-default" data-dismiss="modal">Close</button>
-                            <button className="btn btn-success">Save option</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
     }
 }
 
