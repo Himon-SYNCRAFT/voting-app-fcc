@@ -1,5 +1,6 @@
 const React = require('react')
 const d3 = require('d3')
+const Modal = require('react-modal')
 const PollsStore = require('../stores/PollsStore')
 const PollsActions = require('../actions/PollsActions')
 
@@ -14,12 +15,16 @@ class VotingPanel extends React.Component {
                 options: {}
             },
 
-            vote: ''
+            vote: '',
+
+            modalIsOpen: false
         }
 
         this._onChange = this._onChange.bind(this)
         this._handleOption = this._handleOption.bind(this)
         this._onSubmit = this._onSubmit.bind(this)
+        this._closeModal = this._closeModal.bind(this)
+        this._openModal = this._openModal.bind(this)
     }
 
     _onChange() {
@@ -28,6 +33,14 @@ class VotingPanel extends React.Component {
 
     _handleOption(event) {
         this.setState({ vote: event.target.value })
+    }
+
+    _closeModal() {
+        this.setState({modalIsOpen: false})
+    }
+
+    _openModal() {
+        this.setState({modalIsOpen: true})
     }
 
     _onSubmit(event) {
@@ -67,16 +80,42 @@ class VotingPanel extends React.Component {
                             <select value={this.state.vote} onChange={this._handleOption} className="form-control">
                                 {options}
                             </select>
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-success" disabled={isButtonDisabled ? 'disabled' : ''}>Vote</button>
-                </div>
-                </form>
+                        </div>
+                         <div className="form-group">
+                           <button className="btn btn-success" disabled={isButtonDisabled ? 'disabled' : ''}>Vote</button>
+                        </div>
+                    </form>
+                    <button className="btn btn-success" onClick={this._openModal}>Add option</button>
                 </div>
                 <div className="col-sm-9" style={{textAlign: 'center'}}>
                     <PieChart data={data} />
                 </div>
-                </div>
+                <Modal
+                    isOpen={this.state.modalIsOpen}
+                    onRequestClose={this._closeModal}
+                    contentLabel="Add new option"
+                    style={{
+                        border: 'none',
+                        background: 'none'
+                    }}
+                >
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <button type="button" className="close" onClick={this._closeModal}><span aria-hidden="true">&times;</span></button>
+                                <h4 className="modal-title">Modal title</h4>
+                            </div>
+                            <div className="modal-body">
+                                <p>One fine body&hellip;</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-default" onClick={this._closeModal}>Close</button>
+                                <button type="button" className="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+            </div>
         )
     }
 }
@@ -132,6 +171,36 @@ class PieChart extends React.Component {
             .style('text-anchor', 'middle')
 
         return <div id="d3"></div>
+    }
+}
+
+class AddOptionModal extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    render() {
+        return (
+            <div id="add-option-modal" className="modal fade" tabIndex="-1" role="dialog">
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button className="close" data-dismiss="modal">
+                                <span>&times;</span>
+                            </button>
+                            <h4 className="modal-title">Add new option</h4>
+                        </div>
+                        <div className="modal-body">
+                            bla bal bal
+                        </div>
+                        <div className="modal-footer">
+                            <button className="btn btn-default" data-dismiss="modal">Close</button>
+                            <button className="btn btn-success">Save option</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
