@@ -35,14 +35,6 @@ class VotingPanel extends React.Component {
         this.setState({ vote: event.target.value })
     }
 
-    _closeModal() {
-        this.setState({modalIsOpen: false})
-    }
-
-    _openModal() {
-        this.setState({modalIsOpen: true})
-    }
-
     _onSubmit(event) {
         event.preventDefault()
         PollsActions.vote(this.props.params.id, this.state.vote)
@@ -54,6 +46,14 @@ class VotingPanel extends React.Component {
 
     componentWillUnmount() {
         PollsStore.removeChangeListener(this._onChange)
+    }
+
+	_closeModal() {
+        this.setState({modalIsOpen: false})
+    }
+
+    _openModal() {
+        this.setState({modalIsOpen: true})
     }
 
     render() {
@@ -89,37 +89,66 @@ class VotingPanel extends React.Component {
                 </div>
                 <div className="col-sm-9" style={{textAlign: 'center'}}>
                     <PieChart data={data} />
-                </div>
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    onRequestClose={this._closeModal}
-                    contentLabel="Add new option"
-                    style={{
-                        content: {
-                            border: 'none',
-                            background: 'none'
-                        }
-                    }}
-                >
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <button type="button" className="close" onClick={this._closeModal}><span aria-hidden="true">&times;</span></button>
-                                <h4 className="modal-title">Modal title</h4>
-                            </div>
-                            <div className="modal-body">
-                                <p>One fine body&hellip;</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" className="btn btn-default" onClick={this._closeModal}>Close</button>
-                                <button type="button" className="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
+				</div>
+				<AddOptionModal pollId={this.props.params.id} closeModal={this._closeModal} openModal={this._openModal} modalIsOpen={this.state.modalIsOpen} />
             </div>
         )
     }
+}
+
+
+class AddOptionModal extends React.Component {
+	constructor(props) {
+		super(props)
+
+		this.state = {
+			option: ''
+		}
+
+        this._onChange = this._onChange.bind(this)
+        this._onSave = this._onSave.bind(this)
+	}
+
+	_onChange(event) {
+		this.setState({ option: event.target.value })
+	}
+
+	_onSave(event) {
+		PollsActions.addOption(this.props.pollId, { option: this.state.option })
+	}
+
+
+	render() {
+		return (
+			<Modal
+				isOpen={this.props.modalIsOpen}
+                onRequestClose={this.props.closeModal}
+                contentLabel="Add new option"
+                style={{
+                    content: {
+                        border: 'none',
+                        background: 'none'
+                    }
+                }}
+            >
+                <div className="modal-dialog" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" onClick={this.props.closeModal}><span aria-hidden="true">&times;</span></button>
+                            <h4 className="modal-title">Add new option</h4>
+                        </div>
+						<div className="modal-body">
+							<input name="option" placeholder="option" value={this.state.option} onChange={this._onChange}/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-default" onClick={this.props.closeModal}>Close</button>
+                            <button type="button" className="btn btn-primary" onClick={this._onSave}>Save</button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+		)
+	}
 }
 
 class PieChart extends React.Component {

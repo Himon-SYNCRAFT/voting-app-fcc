@@ -27,7 +27,7 @@ const Api = {
             return instance.post('/polls', data)
         },
 
-        update: (id, data) => {
+        addOption: (id, data) => {
             return instance.patch('/poll/' + id, data)
         },
 

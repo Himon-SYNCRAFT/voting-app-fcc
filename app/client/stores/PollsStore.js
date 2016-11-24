@@ -63,9 +63,9 @@ AppDispatcher.register((action) => {
             PollsStore.emit(CHANGE)
             break;
 
-        case PollsConstants.UPDATE_POLL:
+        case PollsConstants.ADD_POLL_OPTION:
             for (let i = 0, l = _polls.length; i < l; i++) {
-                if (_polls[i]._id === action.id) {
+                if (_polls[i]._id == action.data._id) {
                     _polls[i] = action.data
                 }
             }

@@ -13,7 +13,7 @@ module.exports = (app, db) => {
 
     app.route('/api/poll/:id')
         .get(pollsHandler.getOne)
-        .post(isLogged, pollsHandler.addOption)
+        .patch(isLogged, pollsHandler.addOption)
         .delete(isLogged, pollsHandler.deletePoll)
 
     app.route('/api/poll/:id/vote/:option')

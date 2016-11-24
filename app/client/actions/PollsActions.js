@@ -62,6 +62,16 @@ const PollsActions = {
                 })
             })
     },
+
+    addOption: (id, data) => {
+        Api.polls.addOption(id, data)
+            .then(response => {
+                AppDispatcher.dispatch({
+                    actionType: PollsConstants.ADD_POLL_OPTION,
+                    data: response.data
+                })
+            })
+    }
 }
 
 module.exports = PollsActions
