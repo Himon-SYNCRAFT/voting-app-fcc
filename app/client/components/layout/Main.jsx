@@ -58,11 +58,11 @@ class Main extends React.Component {
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <Link className="navbar-brand" to="/">Home</Link>
                     </div>
 
                     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul className="nav navbar-nav">
+                            <li><Link to="/">Home</Link></li>
                         </ul>
                     <ul className="nav navbar-nav navbar-right">
                         {rightMenu}

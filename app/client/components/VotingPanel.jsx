@@ -2,6 +2,7 @@ const React = require('react')
 const d3 = require('d3')
 const Modal = require('react-modal')
 const PollsStore = require('../stores/PollsStore')
+const AuthStore = require('../stores/AuthStore')
 const PollsActions = require('../actions/PollsActions')
 
 class VotingPanel extends React.Component {
@@ -61,6 +62,13 @@ class VotingPanel extends React.Component {
         let data = []
         let options = [(<option key={""} value=''>-- Choose --</option>)]
         let isButtonDisabled = this.state.vote == ''
+        let modal = ''
+        let addOptionButton = ''
+
+        if (AuthStore.isLogged()) {
+            modal = <AddOptionModal pollId={this.props.params.id} closeModal={this._closeModal} openModal={this._openModal} modalIsOpen={this.state.modalIsOpen} />
+            addOptionButton = <button className="btn btn-success" onClick={this._openModal}>Add option</button>
+        }
 
         for (let key in poll.options) {
             data.push({
@@ -85,12 +93,12 @@ class VotingPanel extends React.Component {
                            <button className="btn btn-success" disabled={isButtonDisabled ? 'disabled' : ''}>Vote</button>
                         </div>
                     </form>
-                    <button className="btn btn-success" onClick={this._openModal}>Add option</button>
+                    {addOptionButton}
                 </div>
                 <div className="col-sm-9" style={{textAlign: 'center'}}>
                     <PieChart data={data} />
 				</div>
-				<AddOptionModal pollId={this.props.params.id} closeModal={this._closeModal} openModal={this._openModal} modalIsOpen={this.state.modalIsOpen} />
+                {modal}
             </div>
         )
     }
