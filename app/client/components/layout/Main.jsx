@@ -38,11 +38,13 @@ class Main extends React.Component {
         browserHistory.push('/')
     }
 
-	_closeModal() {
+	_closeModal(event) {
+        event.preventDefault()
         this.setState({isLoginModalOpen: false})
     }
 
-    _openModal() {
+    _openModal(event) {
+        event.preventDefault()
         this.setState({isLoginModalOpen: true})
     }
 

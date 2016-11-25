@@ -52,6 +52,7 @@ class LoginModal extends React.Component {
                     }
                 }}
             >
+                <form method="post" className="form-horizontal" onSubmit={this._onSubmit}>
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -59,7 +60,6 @@ class LoginModal extends React.Component {
                             <h4 className="modal-title">Login Panel</h4>
                         </div>
 						<div className="modal-body">
-                            <form method="post" className="form-horizontal" onSubmit={this._onSubmit}>
                                 <div className="form-group">
                                     <label htmlFor="username" className="col-sm-2 control-label" >Username</label>
                                     <div className="col-sm-10">
@@ -72,15 +72,14 @@ class LoginModal extends React.Component {
                                         <input id="password" name="password" placeholder="password" className="form-control" type="password" value={this.state.user.password} onChange={this._handlePasswordChange} />
                                     </div>
                                 </div>
-                                <div className="form-group">
-                                    <div className="col-sm-offset-2 col-sm-10">
-                                        <button className="btn btn-success">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
+                        </div>
+						<div className="modal-footer">
+							<button className="btn btn-success">Submit</button>
+							<button className="btn btn-danger" onClick={this.props.closeModal}>Cancel</button>
                         </div>
                     </div>
                 </div>
+                </form>
             </Modal>
         )
     }

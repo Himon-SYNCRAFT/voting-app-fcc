@@ -2,3 +2,7 @@ li.polls-list-item a {
     width: 100%;
     margin-bottom: 10px;
 }
+
+nav.navbar a {
+    outline: none;
+}
