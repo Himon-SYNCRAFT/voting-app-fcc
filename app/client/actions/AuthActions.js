@@ -26,6 +26,17 @@ const AuthActions = {
                 })
             })
     },
+
+    isLogged: () => {
+        Api.auth.isLogged()
+            .then(response => {
+                if (!response.data.isLogged) {
+                    AppDispatcher.dispatch({
+                        actionType: AuthConstants.LOGOUT_USER
+                    })
+                }
+            })
+    },
 }
 
 module.exports = AuthActions

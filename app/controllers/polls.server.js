@@ -63,10 +63,11 @@ function pollsHandler(db) {
         pollsCollection.findOneAndDelete({_id: pollId, userId: userId}, (err, doc) => {
             if (err) {
                 throw err
-            } else if (!doc) {
+            } else if (!doc.value) {
                 res.status(404)
                     .send('Not Found')
             } else {
+                console.log(doc);
                 res.json(doc)
             }
         })

@@ -34,6 +34,9 @@ module.exports = (app, db) => {
     app.route('/api/auth/islogged')
         .get(usersHandler.isLogged)
 
+    app.route('/api/*')
+        .get(abort404)
+
     app.route('*')
         .get((req, res) => {
             res.sendFile(process.cwd() + '/public/index.html')
@@ -47,4 +50,9 @@ function isLogged(req, res, next) {
 
     res.status(403)
     res.end()
+}
+
+function abort404(req, res) {
+    res.status(404)
+    res.send('Not Found')
 }

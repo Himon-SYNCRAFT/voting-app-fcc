@@ -9,6 +9,10 @@ const POLLS_CONSTANTS = keymirror({
     UPDATE_POLL: null,
     ADD_POLL_OPTION: null,
     VOTE: null,
+    POLL_FORBIDDEN_ACTION: null,
+    POLL_ERROR: null,
+    POLLS_NOT_FOUND: null,
+    POLL_NOT_FOUND: null,
 })
 
 module.exports = POLLS_CONSTANTS

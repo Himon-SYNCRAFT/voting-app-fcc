@@ -58,7 +58,7 @@ AppDispatcher.register((action) => {
             break;
 
         case PollsConstants.DELETE_POLL:
-            let id = action.data._id
+            let id = action.data
             _polls = _polls.filter(poll => poll._id != id)
             PollsStore.emit(CHANGE)
             break;
