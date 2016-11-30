@@ -207,6 +207,11 @@ const PollsActions = {
                             message = 'You can add options only as an authorized user'
                             break
 
+                        case 409:
+                            actionType = PollsConstants.POLL_ERROR
+                            message = 'Option already exist.'
+                            break
+
                         default:
                             actionType = PollsConstants.POLL_ERROR
                             message = 'We were unable to perform the requested action. Please try again later.'

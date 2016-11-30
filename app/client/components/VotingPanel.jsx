@@ -177,8 +177,8 @@ class PieChart extends React.Component {
             .innerRadius(40)
 
         let labelArc = d3.arc()
-            .outerRadius(radius - 10)
-            .innerRadius(radius - 10)
+            .outerRadius(radius / 2)
+            .innerRadius(radius / 2)
 
         let pie = d3.pie()
             .sort(null)
@@ -206,7 +206,8 @@ class PieChart extends React.Component {
         g.append('text')
             .attr('transform', d => 'translate(' + labelArc.centroid(d) + ')')
             .attr('dy', '.35em')
-            .text(d => d.data.label)
+            .text(d => d.data.label + ' (' + d.data.value + ')')
+            .attr('class', 'pie-label')
             .style('text-anchor', 'middle')
 
         return <div id="d3"></div>

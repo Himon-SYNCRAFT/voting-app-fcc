@@ -94,7 +94,7 @@ class Main extends React.Component {
             </nav>
                 {errors}
                 {this.props.children}
-                <LoginModal closeModal={this._closeModal} openModal={this._openModal} isLoginModalOpen={this.state.isLoginModalOpen} />
+                <LoginModal closeModal={this._closeModal} openModal={this._openModal} isLoginModalOpen={!userIsLogged && this.state.isLoginModalOpen} />
         </div>
         )
     }

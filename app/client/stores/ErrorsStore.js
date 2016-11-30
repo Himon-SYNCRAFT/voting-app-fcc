@@ -2,6 +2,7 @@ const AppDispatcher = require('../dispatcher/AppDispatcher')
 const EventEmitter = require('events').EventEmitter
 const ErrorsConstants = require('../constants/ErrorsConstants')
 const PollsConstants = require('../constants/PollsConstants')
+const AuthConstants = require('../constants/AuthConstants')
 const assign = require('object-assign')
 
 const CHANGE = 'CHANGE ERRORS'
@@ -47,6 +48,11 @@ AppDispatcher.register((action) => {
             break
 
         case PollsConstants.POLLS_NOT_FOUND:
+            _errors.push(action.message)
+            ErrorsStore.emit(CHANGE)
+            break
+
+        case AuthConstants.LOGIN_ERROR:
             _errors.push(action.message)
             ErrorsStore.emit(CHANGE)
             break
