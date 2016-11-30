@@ -171,6 +171,11 @@ const PollsActions = {
                             message = 'We were unable to obtain the poll data. The poll has been removed or has never existed.'
                             break
 
+                        case 409:
+                            actionType = PollsConstants.POLL_ERROR
+                            message = 'You already voted'
+                            break
+
                         default:
                             actionType = PollsConstants.POLL_ERROR
                             message = 'We were unable to perform the requested action. Please try again later.'

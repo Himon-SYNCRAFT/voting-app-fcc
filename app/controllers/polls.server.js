@@ -134,7 +134,8 @@ function pollsHandler(db) {
         let poll = {
             name: req.body.name,
             userId: userId,
-            options: o
+            options: o,
+            voters: []
         }
 
         pollsCollection.insertOne(poll, (err, result) => {
@@ -178,9 +179,14 @@ function pollsHandler(db) {
                 res.status(404)
                     .send('Not Found')
             } else {
-                if (option in doc.options) {
-                    console.log(option)
+                let voter = req.ip
+
+                if (doc.voters.indexOf(voter) > -1) {
+                    res.status(409)
+                        .send('You already voted')
+                } else if (option in doc.options) {
                     doc.options[option]++
+                    doc.voters.push(voter)
                     pollsCollection.save(doc)
                     res.json(doc)
                 } else {
