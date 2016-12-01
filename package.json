@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify -t [ babelify --presets [ es2015 react ] ] app/client/app.js > public/js/bundle.js",
 	"minify": "uglifyjs --no-bundle-external public/js/bundle.js -o public/js/bundle.min.js",
-    "start": "npm run-script build && node server"
+    "start": "node server"
   },
   "author": "Daniel Zawłocki",
   "license": "ISC",
