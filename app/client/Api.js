@@ -1,6 +1,6 @@
 const axios = require('axios')
 const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/',
+    baseURL: 'https://polls-app-fcc.herokuapp.com/api/',
     timeout: 10000
 })
 
